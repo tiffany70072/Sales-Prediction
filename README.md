@@ -1,7 +1,7 @@
 # Sales-Prediction
 
 ## Introduction
-### Data after preprocess:
+### Data after preprocess
 | File name | shape | content |
 | --------- | ----- | ------- |
 | exist.npy | 499 * 433 * 103 tensor | 1, if sales data for product exists on this device in this week; 0, no data here |
@@ -16,7 +16,6 @@
         testing_data = data[test_id] 
         MAE[test_id] = sum(absolute_error_of_testing_data) 
         MSE[test_id] = sum(square_error_of_testing_data)) 
-
     MAE = sum(MAE[test_id] * number_data[test_id]) 
     MSE = sum(MSE[test_id] * number_data[test_id]) 
     
@@ -57,7 +56,7 @@ There is a coefficient, alpha, in each last three weighted sum method. <br />
 They are set as 0.4, 1.0, 2.0.
 * File name: matrix_factorization.py
 
-### modified_FPMC
+### Modified_FPMC
 * Change the last two layers in FPMC so this algorithm can predict value instead of probability.
 * File name: modified_FPMC.py
 
