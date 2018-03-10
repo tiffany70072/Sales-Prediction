@@ -3,48 +3,62 @@
 ## Introduction
 ### Data after preprocess:
 | File name | shape | content |
-| exist.npy | 499*433*103 tensor | 1, if sales data for product exists on this device in this week; 0, no data here |
-| amount.npy | 499*433*103 tensor | real sales amount |
-| exist_first.npy | 499*433*103 tensor | 1, if data for product was sold on this device for the first time' 0, for other situations |
-| price.npy | 499*433*103 tensor | real price |
-| number.npy | 499*433*103 tensor | real sales count, = amount / price |
+| --------- | ----- | ------- |
+| exist.npy | 499 * 433 * 103 tensor | 1, if sales data for product exists on this device in this week; 0, no data here |
+| amount.npy | 499 * 433 * 103 tensor | real sales amount |
+| exist_first.npy | 499 * 433 * 103 tensor | 1, if data for product was sold on this device for the first time; 0, other situations |
+| price.npy | 499 * 433 * 103 tensor | real price |
+| number.npy | 499 * 433 * 103 tensor | real sales count, = amount / price |
 
 ### Evaluation
-For test_id = 55 to 100:
-    training data = data[1:test_id-1]
-    testinf data = data[test_id]
+For test_id = 55 to 100: <br />
+> training_data = data[1:test_id-1] <br />
+> testing_data = data[test_id] <br />
+> MAE[test_id] = sum(absolute_error(testing_data)) <br />
+> MSE[test_id] = sum(square_error(testing_data)) <br />
+
+MAE = sum(MAE[test_id] * number_data[test_id]) <br />
+MSE = sum(MSE[test_id] * number_data[test_id]) <br />
     
 ## Model
 ### Tensor factorzaion
-3 dimensional tensor: device * product * time
-File name: tensor_factorization.py
+* 3 dimensional tensor: device * product * time
+* File name: tensor_factorization.py
 
 ### Binary classifier
-File name: classifier.py
-File name: prediction_two_steps.py
+* classifier's structure: <br />
+  x1 = neural_network(input quantitive features) <br />
+  x2 = neural_network(input one-hot features) <br />
+  prediction = neural_network(concatenate(x1, x2))
+* Combination: <br />
+> 1. Use classifier to predict the sold out probability is zero or not <br />
+> 2. If the output is not zero, then use tensor factorizaion to predict the value <br />
+* File name: classifier.py <br />
+  File name: prediction_two_steps.py
 
 ### (New) Matrix factorization (with all first-time product) 
-Filter out all data, if they appear on a device for the first time, as real value.
-File name: mf_factorization_machine.py
+* Filter: <br />
+> Only use the data, if the product appears on a device for the first time, as real value. <br />
+> Without considering which week of these data.
+* File name: mf_factorization_machine.py
 
 ### Factorization machine
-Add other features into matrix factorization.
-
-File name: mf_factorization_machine.py
-
+* Add other features into matrix factorization. <br />
+> Example: the sales amount of the same product when it was sold on another device for the first time. <br />
+> Example: the sales amount of other products when they were sold on the same device for the first time. <br />
+* File name: mf_factorization_machine.py
 
 ## Baseline model
 ### Matrix factorization (with weighted sum of sales amount)
-Weighted sum the past sales amount as the real value in testing week.
-Four different weighted sum method, including exponential moving average.
-There is a coefficient, alpha, in each last three weighted sum method.
+* Totally different with the (new) matrix factorization. <br />
+Weighted sum the past sales amount as the real value in testing week. <br />
+* Four different weighted sum method, including exponential moving average. <br />
+There is a coefficient, alpha, in each last three weighted sum method. <br />
 They are set as 0.4, 1.0, 2.0.
-
-File name: matrix_factorization.py
+* File name: matrix_factorization.py
 
 ### modified_FPMC
-Change the last two layers in FPMC so this algorithm can predict value instead of probability.
-
-File name: modified_FPMC.py
+* Change the last two layers in FPMC so this algorithm can predict value instead of probability.
+* File name: modified_FPMC.py
 
 
