@@ -11,14 +11,14 @@
 | number.npy | 499 * 433 * 103 tensor | real sales count, = amount / price |
 
 ### Evaluation
-For test_id = 55 to 100: <br />
-> training_data = data[1:test_id-1] <br />
-> testing_data = data[test_id] <br />
-> MAE[test_id] = sum(absolute_error(testing_data)) <br />
-> MSE[test_id] = sum(square_error(testing_data)) <br />
+    For test_id = 55 to 100: 
+        training_data = data[1:test_id-1] 
+        testing_data = data[test_id] 
+        MAE[test_id] = sum(absolute_error(testing_data)) 
+        MSE[test_id] = sum(square_error(testing_data)) 
 
-MAE = sum(MAE[test_id] * number_data[test_id]) <br />
-MSE = sum(MSE[test_id] * number_data[test_id]) <br />
+    MAE = sum(MAE[test_id] * number_data[test_id]) 
+    MSE = sum(MSE[test_id] * number_data[test_id]) 
     
 ## Model
 ### Tensor factorzaion
@@ -31,21 +31,21 @@ MSE = sum(MSE[test_id] * number_data[test_id]) <br />
   x2 = neural_network(input one-hot features) <br />
   prediction = neural_network(concatenate(x1, x2))
 * Combination: <br />
-> 1. Use classifier to predict the sold out probability is zero or not <br />
-> 2. If the output is not zero, then use tensor factorizaion to predict the value <br />
+    1. Use classifier to predict the sold out probability is zero or not <br />
+    2. If the output is not zero, then use tensor factorizaion to predict the value <br />
 * File name: classifier.py <br />
   File name: prediction_two_steps.py
 
 ### (New) Matrix factorization (with all first-time product) 
 * Filter: <br />
-> Only use the data, if the product appears on a device for the first time, as real value. <br />
-> Without considering which week of these data.
+    * Only use the data, if the product appears on a device for the first time, as real value. <br />
+    * Without considering which week of these data.
 * File name: mf_factorization_machine.py
 
 ### Factorization machine
 * Add other features into matrix factorization. <br />
-> Example: the sales amount of the same product when it was sold on another device for the first time. <br />
-> Example: the sales amount of other products when they were sold on the same device for the first time. <br />
+    * Example: the sales amount of the same product when it was sold on another device for the first time. <br />
+    * Example: the sales amount of other products when they were sold on the same device for the first time. <br />
 * File name: mf_factorization_machine.py
 
 ## Baseline model
