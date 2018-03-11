@@ -39,8 +39,8 @@
   x2 = neural_network(input one-hot features) <br />
   prediction = neural_network(concatenate(x1, x2))
 * Combination: <br />
-1. Use classifier to predict the sold out probability is zero or not <br />
-2. If the output is not zero, then use tensor factorizaion to predict the value <br />
+    1. Use classifier to predict the sold out probability is zero or not <br />
+    2. If the output is not zero, then use tensor factorizaion to predict the value <br />
 * File name: classifier.py <br />
   File name: prediction_two_steps.py (used for combination)
 
@@ -59,7 +59,7 @@ Example: the sales amount of other products when they were sold on the same devi
 
 ## Baseline model
 ### Matrix factorization (with weighted sum of sales amount)
-* Totally different with the (new) matrix factorization. <br />
+* Different from (new) matrix factorization. <br />
 Weighted sum the past sales amount as the real value in testing week. <br />
 * 2 dimensional matrix: device * product (in the last week)
 * Four different weighted sum method, including exponential moving average. <br />
